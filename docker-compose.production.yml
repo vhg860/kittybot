@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  bot:
+    image: vhg860/bot:latest
+    environment:
+      - TOKEN=${TOKEN}
+    restart: always
+    volumes:
+      - .env:/app/.env
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 8070:80

@@ -20,12 +20,12 @@ This project is a Telegram bot that sends random cat and dog images to users. Th
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone git@github.com:vhg860/kittybot.git
+   cd kittybot
    ```
 2. Create and activate a virtual environment (optional but recommended):
     ```sh
-    python -m venv venv
+    python3 -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    ```
 3. Install the dependencies:
@@ -57,17 +57,26 @@ This project uses GitHub Actions for CI/CD. The workflow is configured to:
 1. Build and push the Docker image to Docker Hub.
 2. Deploy the new image to a remote server.
 
+## Manual Deployment
+1. Ensure that the .env file is present in the project directory on the server and contains the TOKEN variable.
+2. Deploy using Docker Compose:
+    ```sh
+    docker-compose -f docker-compose.production.yml pull
+    docker-compose -f docker-compose.production.yml up -d
+    ```
 ## Setup GitHub Actions
 1. Fork or clone this repository.
 2. Go to the repository settings on GitHub.
 3. Add the following secrets in the Settings > Secrets and variables > Actions > New repository secret:
 
-    DOCKER_USERNAME: Your Docker Hub username.
-    DOCKER_PASSWORD: Your Docker Hub password.
-    SSH_PRIVATE_KEY: Private SSH key for accessing your server.
-    SSH_HOST: IP address or domain of your server.
-    SSH_USERNAME: SSH username for your server.
-    DEPLOY_PATH: Path on your server where the project should be deployed.
+    - DOCKER_USERNAME: Your Docker Hub username.
+    - DOCKER_PASSWORD: Your Docker Hub password.
+    - SSH_KEY: Private SSH key for accessing your server.
+    - SSH_PASSPHRASE: Private SSH passphrase.
+    - HOST: IP address or domain of your server.
+    - USERNAME: SSH username for your server.
+    - TELEGRAM_TO: ID chat or chanel in Telegram for notifications.
+    - TELEGRAM_TOKEN: the token of your Telegram bot for sending notifications.
 
 ## Usage
 1. Start a chat with your Telegram bot.
@@ -76,12 +85,15 @@ This project uses GitHub Actions for CI/CD. The workflow is configured to:
 4. Use the /newdog command to get a random dog image.
 
 ## Project Structure
+```text
 .
 ├── .github
 │   └── workflows
 │       └── main.yml        # GitHub Actions workflow
 ├── .env                    # Environment variables
 ├── Dockerfile              # Dockerfile for building the image
-├── docker-compose.yml      # Docker Compose configuration
+├── docker-compose.yml      # Docker Compose configuration (development)
+├── docker-compose.production.yml  # Docker Compose configuration (production)
 ├── requirements.txt        # Python dependencies
-└── your_script.py          # Main bot script
+└── kittybot.py             # Main bot script
+```
