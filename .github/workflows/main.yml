@@ -57,8 +57,9 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd animalbot
-            docker-compose -f docker-compose.production.yml pull
-            docker-compose -f docker-compose.production.yml up -d
+            sudo docker compose -f docker-compose.production.yml pull
+            sudo docker compose -f docker-compose.production.yml down
+            sudo docker compose -f docker-compose.production.yml up -d
 
   send_message:
     runs-on: ubuntu-latest
