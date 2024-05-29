@@ -7,7 +7,7 @@ services:
       - TOKEN=${TOKEN}
     restart: always
     volumes:
-      - .env:/app/.env
+      - .env
     deploy:
       replicas: 1
       update_config:
